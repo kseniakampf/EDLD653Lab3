@@ -14,15 +14,12 @@ knitr::opts_chunk$set(echo = TRUE,
                       warning = FALSE)
 
 library(tidyverse)
-library(rio)
-library(here)
-library(ggplot2)
 #install.packages("repurrrsive")
 library(repurrrsive)
-library(httr)
 ```
 
-###Part A: Foundations
+### Part A: Foundations
+
 #### 1. Briefly name and describe the three fundamental components of a function.
 
 The function has 3 main components: body, formals, and environment
@@ -110,4 +107,40 @@ identical((mtcars$mpg - mean(mtcars$mpg, na.rm = TRUE)) /
   sd(mtcars$mpg, na.rm = TRUE), z_scoring(mtcars$mpg))
 ```
 
+4. Write a function that takes a data frame as its input and returns a data
+frame with only the numeric columns.
+```{r}
+numeric_data <- function(df, as_tibble = TRUE) {
+	num_df <- map_lgl(df, is.numeric)
+	as.data.frame(df[ ,num_df])
+}
+
+head(numeric_data(iris))
+```
+
+5. Write a function that uses the function you wrote in Question 4, and returns a data frame with the mean and standard deviation of each numeric column. If columns are omitted (because they are non-numeric), print a message stating the specific columns that were not included.
+```{r}
+summ_data <- function(df, as_tibble = TRUE) {
+	df_num <- numeric_data(df)
+	means <- map_dbl(df_num, mean_new)
+	sds <- map_dbl(df_num, sd, na.rm = TRUE)
+  
+	if(length(names(df)) != length(names(df_num))) {
+	  message("The following columns have been excluded: ", 
+	          paste(setdiff(names(df), names(df_num)), collapse = ", "))
+	}
+if (as_tibble) {
+   output <- tibble::tibble(variable = names(df_num),
+                 mean = means,
+                  sd = sds)
+   } else {
+		output <- data.frame(variable = names(df_num),
+		                  mean = means,
+		                  sd = sds)
+		}
+		output
+}
+
+summ_data(iris)
+summ_data(forcats::gss_cat)
 ```
