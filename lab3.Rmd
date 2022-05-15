@@ -1,0 +1,39 @@
+---
+title: "EDLD653 Lab3"
+author: "Ksenia Gordeeva"
+date: "5/14/2022"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE)
+
+library(tidyverse)
+library(rio)
+library(here)
+library(ggplot2)
+#install.packages("repurrrsive")
+library(repurrrsive)
+library(httr)
+```
+
+###Part A: Foundations
+#### 1. Briefly name and describe the three fundamental components of a function.
+
+The function has 3 main components: body, formals, and environment
+* Formals are the arguments that the function uses
+* Body represents the action the function performs, it also specifies how the formals are used. It is essentialy a code inside the function.
+* Environment is where the function was created, it determines where the function looks for variables, which is important for scoping. 
+
+#### Describe three different ways functions can be stored/applied and an example of when you might want to use each version.
+* Functions are often bound to a name. They are in the form of a name of the function preceding the parenthesis where the function arguments are inserted. We apply them by the calling the said function name and specifying the arguments. Examples of such functions are `length()`, `rbind()`, `order()`, etc. 
+
+* We can also have functions that are not bound to a name but stored in loops instead. We would refer to those as anonymous functions. These would be functionals like `lapply`, `vapply` or `purr::map2`.
+
+* Another option is a type of functions that are bound to names within lists. This is useful when we have a set functions and want to loop them through something. We would create a list where each element is a function. We can then access the functions in the same way we would subset any list.
+
