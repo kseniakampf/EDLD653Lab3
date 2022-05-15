@@ -67,3 +67,47 @@ mean_new(airquality$Solar.R)
 mean(airquality$Solar.R)
 mean(airquality$Solar.R, na.rm = TRUE)
 ```
+3. Turn the following three lines of code into three different functions. Make sure to give them meaningful names. Test the functions to make sure they provide the expected output.
+```{r}
+# Count number of missing elements in a vector
+sum(is.na(airquality$Ozone))
+
+count_NAs <- function(x) {
+	sum(is.na(x))
+}
+count_NAs(airquality$Ozone)
+
+# Proportional representation of each level (unique element) in a vector
+purrr::map_dbl(split(mtcars$cyl, mtcars$cyl), length) / length(mtcars$cyl)
+
+prop_level <- function(element) {
+	purrr::map_dbl(split(element, element), length) / length(element)
+}
+prop_level(mtcars$cyl)
+
+
+# normalize or z-score a vector so the mean is zero and sd is one
+(mtcars$mpg - mean(mtcars$mpg, na.rm = TRUE)) / 
+  sd(mtcars$mpg, na.rm = TRUE) 
+
+remove_NAs <- function(x) {
+  if(any(is.na(x))) {
+		removed <- sum(is.na(x))
+		warning(paste(removed, " observations removed"))
+		x <- na.omit(x)
+  }
+  x
+}
+
+z_scoring <- function(x) {
+	x <- remove_NAs(x)
+	(x - mean(x)) / sd(x) 
+}
+
+z_scoring(mtcars$mpg)
+
+identical((mtcars$mpg - mean(mtcars$mpg, na.rm = TRUE)) / 
+  sd(mtcars$mpg, na.rm = TRUE), z_scoring(mtcars$mpg))
+```
+
+```
