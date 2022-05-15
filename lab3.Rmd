@@ -51,3 +51,19 @@ mean_new <- function(x) {
 	sum(x)/ length(x)
 }
 ```
+2. Test your function to make sure it (a) provides the expected results, and (b)
+gives identical output to `base::mean` when `na.rm = TRUE`. Make sure that you test your data against a vector that has missing data.
+```{r}
+str(mtcars)
+mean_new(mtcars$hp)
+mean(mtcars$hp)
+
+mean_new(mtcars$mpg)
+mean(mtcars$mpg)
+mean(mtcars$mpg, na.rm = TRUE)
+#This set does not have any missing values though, so I will try another one
+
+mean_new(airquality$Solar.R)
+mean(airquality$Solar.R)
+mean(airquality$Solar.R, na.rm = TRUE)
+```
