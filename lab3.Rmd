@@ -37,3 +37,17 @@ The function has 3 main components: body, formals, and environment
 
 * Another option is a type of functions that are bound to names within lists. This is useful when we have a set functions and want to loop them through something. We would create a list where each element is a function. We can then access the functions in the same way we would subset any list.
 
+### Part B: Applied practice
+
+1. Write a function to calculate the mean that removes missing data before
+conducting the calculation. You may not use `base::mean` or any similar function that conducts a mean calculation. Include a warning in your function if missing data have been removed that prints the total number of cases that were removed.
+```{r}
+mean_new <- function(x) {
+	if(any(is.na(x))) {
+		removed <- sum(is.na(x))
+		warning(removed, " observations removed")
+		x <- na.omit(x)
+	}
+	sum(x)/ length(x)
+}
+```
